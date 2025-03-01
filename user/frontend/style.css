@@ -16,6 +16,68 @@ background-color: aliceblue;
 {
   display: none;
 }
+h2{
+  text-align: center;
+  text-transform: capitalize;
+  margin:4.5rem 0 0;
+}
+/* .new-arrivals h2{
+  text-align: center;
+  text-transform: capitalize;
+  margin:5rem 0 0;
+} */
+.catalogue
+{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  margin: auto;
+  width:90vw;
+ 
+}
+
+.card
+{
+  display: grid;
+  grid-template-rows: 3fr 1fr;
+  margin: 10% 10% 0%;
+  background-color: lightsteelblue;
+    max-width: 100%;
+min-height: 100%;
+/* height:450px; */
+width:350px;
+padding: 5px 5px;
+
+}
+.card-img 
+{
+   border-radius: 5px;
+background-color: aliceblue;
+ border: solid 2px #a1c4e3;
+
+
+}
+.card-img img{
+  border-radius: 5px;
+  margin: auto;
+  max-width: 100%;
+min-height: 100%;
+height:350px;
+width:350px;
+object-fit: contain;
+}
+.card-img img:hover{
+  box-shadow: 0 0 20px 10px var(--primaryColor);
+}
+.card-description
+{
+  padding-top:25px;
+}
+.card-description p{
+  text-align: center;
+  padding:10px 0;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+}
 /*header section starts*/
 header{
   position: fixed;
@@ -153,7 +215,7 @@ footer li:hover{
   list-style-type: none;
 }
 .social-share ul li{
-  margin:0.5% 1%;
+  margin:3% 1% 0.5%;
 }
 .general-info{
   display: flex;
