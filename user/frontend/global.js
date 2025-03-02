@@ -3,102 +3,7 @@ document.addEventListener('DOMContentLoaded', requestBanners);
 document.addEventListener('DOMContentLoaded', requestFeatured);
 document.addEventListener('DOMContentLoaded', requestNewArrivals);
 
-function requestCategories() {
-    fetchCall("menu.php", responseCategories);
 
-    function responseCategories(data) {
-        console.log(data);
-        const nav = document.querySelector(".navigation");
-        if (data.categories) {
-            const ul = document.createElement("ul");
-            data.categories.forEach(cat => {
-                const li = document.createElement("li");
-                li.className = cat;
-                li.textContent = cat;
-                li.addEventListener('click', getCategoryProducts);
-                ul.appendChild(li);
-            });
-            nav.append(ul);
-        }
-    }
-}
-
-function getCategoryProducts() {
-    console.log("clicked");
-}
-
-function requestBanners() {
-
-    fetchCall("banner.php", responseBanners);
-
-    function responseBanners(data) {
-        if (data.banners) {
-            const banners = data.banners;
-            banners.forEach(banner => {
-                const slide = document.createElement('div');
-                slide.className = "swiper-slide";
-                slide.style.backgroundImage = `url('http://localhost:8081/${banner.image}')`;
-                slide.style.height = "70vh";
-                slide.style.backgroundSize = "cover";
-                const swiperWrapper = document.querySelector(".swiper-wrapper");
-                const h3 = document.createElement('h3');
-                h3.textContent = banner.name;
-                const p = document.createElement('p');
-                p.textContent = banner.description;
-                const button = document.createElement('button');
-                button.textContent = 'Shop Now';
-                slide.appendChild(h3);
-                slide.appendChild(p);
-                slide.appendChild(button);
-                swiperWrapper.append(slide);
-            });
-
-            callCarousel();
-        }
-    }
-}
-
-
-function callCarousel() {
-    const swiper = new Swiper('.swiper', {
-        // Optional parameters
-        loop: true,
-
-        // If we need pagination
-        pagination: {
-            el: '.swiper-pagination',
-        },
-
-        // Navigation arrows
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        }
-    });
-}
-//Request for  featured products
-
-function requestFeatured() {
-    fetchCall("featured.php", responseFeatured);
-
-    function responseFeatured(data) {
-        const featured = data.featured;
-        console.log(featured);
-        const featuredSection = document.querySelector(".featured-products");
-        populateCatalogue(featured, featuredSection);
-    }
-}
-
-function requestNewArrivals() {
-    fetchCall("newArrivals.php", responseNewArrivals);
-
-    function responseNewArrivals(data) {
-        const newArrivals = data.newArrivals;
-        console.log(newArrivals);
-        const newArrivalsSection = document.querySelector(".new-arrivals");
-        populateCatalogue(newArrivals, newArrivalsSection);
-    }
-}
 
 //common function
 function populateCatalogue(products, catalogueParent) {
@@ -110,6 +15,7 @@ function populateCatalogue(products, catalogueParent) {
         products.forEach(prod => {
             const card = document.createElement('div');
             card.className = "card";
+            card.addEventListener("click",getProductdetails.bind(prod));
             const imgDiv = document.createElement('div');
             imgDiv.className = "card-img";
             const descDiv = document.createElement('div');
@@ -145,7 +51,97 @@ function fetchCall(resource, callBack, method = "GET") {
         })
         .then(res => res.json())
         .then(data => {
-            // handlefetchResponse(data);
             callBack(data);
         }).catch((err) => console.log(err))
+}
+
+function getProductdetails()
+{
+    console.log(this);
+    const main =document.querySelector("main");
+    fetchCall(`inventory.php?id=${this.id}`,responseInventory.bind(this));
+    function responseInventory(data)
+    {
+        const stock = +(data.stock);
+        console.log(data);
+        const overlay =document.createElement('div');
+        overlay.className="overlay";
+        overlay.addEventListener("click",removeOverlay);
+        main.appendChild(overlay);
+         const modal =document.createElement('div');
+        modal.className="modal";
+        main.appendChild(modal);
+        const img = document.createElement('img');
+        img.src=`http://localhost:8081${this.image}`;
+        modal.appendChild(img);
+         const modalDesc = document.createElement('div');
+         modalDesc.className="modal-desc";
+         modal.appendChild(modalDesc);
+         const title = document.createElement('div');
+         title.textContent=this.name;
+         modalDesc.appendChild(title);
+          const description = document.createElement('div');
+         description.textContent=this.description;
+          modalDesc.appendChild(description);
+           const price = document.createElement('div');
+         price.textContent=`$${this.price}`;
+          modalDesc.appendChild(price);
+          const stockdiv = document.createElement('div');
+       switch(true)
+       { 
+        case stock>10:
+            stockdiv.textContent="In Stock";
+            stockdiv.style.color="green";
+            break;
+         case stock>0 && stock<=10:
+            stockdiv.textContent=`Only ${stock} left`;
+            stockdiv.style.color="green";
+            break;
+         case stock==0:
+            stockdiv.textContent="Out Of Stock";
+            stockdiv.style.color="red";
+            break;
+        default:
+             stockdiv.textContent="Not Sure";
+            break;
+
+
+       }
+       modalDesc.appendChild(stockdiv);
+       const select = document.createElement("select");
+       if(stock == 0)
+       {
+        select.disabled=true;
+       }
+       else{
+        const counter = (stock > 10)?10:stock;
+        for (let index = 1; index <= counter; index++) {
+            const option = document.createElement('option');
+            option.value=index;
+            option.textContent=index;
+            select.appendChild(option);
+            
+        }
+       }
+       modalDesc.appendChild(select);
+         const addtocart = document.createElement('button');
+         addtocart.className="add-to-cart";
+         addtocart.textContent="Add To Cart";
+         modalDesc.appendChild(addtocart);
+
+    }
+}
+function removeOverlay()
+{
+    const main = document.querySelector("main");
+    const overlay = document.querySelector(".overlay");
+    const modal = document.querySelector(".modal");
+    if(overlay)
+    {
+        overlay.remove();
+    }
+    if(modal)
+    {
+        modal.remove();
+    }
 }
