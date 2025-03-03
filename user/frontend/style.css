@@ -110,6 +110,7 @@ input[type="submit"]{
   cursor: pointer;
   /* background-color:var(--primaryColor); */
 }
+
 /*header section ends*/
 
 
@@ -217,7 +218,7 @@ object-fit: contain;
   z-index: 200;
 
 }
-.modal
+.modal-container
 {
   position: fixed;
   top:25%;
@@ -228,7 +229,10 @@ object-fit: contain;
   background-color: #fff;
   z-index: 300;
   border-radius: 7px;
-    display: grid;
+   
+}
+.modal{
+ display: grid;
   grid-template-columns: 1fr 4fr;
   padding: 10px 20px;
 }
@@ -270,8 +274,34 @@ margin-top: 20px;
      border-radius: 5px;
      font-size: medium;
 }
-/*main section ends*/
 
+/*main section ends*/
+/*login and registration*/
+.login-form{
+  display: flex;
+  flex-direction: column;
+  margin: 10px 10px;
+   
+}
+.formDiv h2
+{
+   margin-top: 3rem;
+}
+.login-form *
+{
+  margin-top: 20px;
+  padding: 5px 3px;
+  font-size: medium;
+ 
+}
+.login-form input[type='submit']
+{
+width: 100%;
+border: none;
+border: 2px solid var(--primaryColor);
+box-shadow: 1px 1px 1px lightslategrey;
+color:#002
+}
 /*footer section starts*/
 footer li{
   transform: all 2s ease-in-out;

@@ -1,4 +1,3 @@
-
 function requestCategories() {
     fetchCall("menu.php", responseCategories);
 
@@ -18,34 +17,35 @@ function requestCategories() {
         }
     }
 }
+
 function getCategoryProducts() {
     const cat = this;
     const main = document.querySelector("main");
-   setActiveCategory(cat);
-   fetchCall(`products.php?category=${cat}`,
-   responseCategoryProducts);
+    setActiveCategory(cat);
+    fetchCall(`products.php?category=${cat}`,
+        responseCategoryProducts);
+
     function responseCategoryProducts(data) {
         console.log(data);
-        if(data.products)
-        {
-            main.innerHTML="";
-            populateCatalogue(data.products,main);
+        if (data.products) {
+            main.innerHTML = "";
+            populateCatalogue(data.products, main);
         }
-       
+
     }
 }
-function setActiveCategory(cat){
-const categorylist = document.querySelectorAll(".navigation li");
-const root=document.querySelector(":root");
-const primaryColor=window.getComputedStyle(root).getPropertyValue('--primaryColor');
-categorylist.forEach(category => {
-  
-    if(category.classList.contains(cat))
-    { console.log(category.className);
-        category.style.backgroundColor=primaryColor;
-    }
-    else{
-         category.style.backgroundColor="initial";
-    }
-});
+
+function setActiveCategory(cat) {
+    const categorylist = document.querySelectorAll(".navigation li");
+    const root = document.querySelector(":root");
+    const primaryColor = window.getComputedStyle(root).getPropertyValue('--primaryColor');
+    categorylist.forEach(category => {
+
+        if (category.classList.contains(cat)) {
+            console.log(category.className);
+            category.style.backgroundColor = primaryColor;
+        } else {
+            category.style.backgroundColor = "initial";
+        }
+    });
 }
