@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', requestBanners);
 document.addEventListener('DOMContentLoaded', requestFeatured);
 document.addEventListener('DOMContentLoaded', requestNewArrivals);
 document.addEventListener('DOMContentLoaded', checkLoginStatus);
-
+document.addEventListener('DOMContentLoaded', updateCart);
 
 //common function
 function populateCatalogue(products, catalogueParent) {
@@ -53,8 +53,9 @@ function fetchCall(resource, callBack, method = "GET",data = undefined) {
             // }
         })
         .then(res => res.json())
-        .then(data => {
-            callBack(data);
+        .then(datap => {
+            callBack(datap);
+            console.log(datap);
         }).catch((err) => console.log(err))
 }
 
@@ -133,6 +134,7 @@ function getProductdetails() {
         const addtocart = document.createElement('button');
         addtocart.className = "add-to-cart";
         addtocart.textContent = "Add To Cart";
+        addtocart.addEventListener("click",addproducttocart.bind({id:this.id,image:this.image,price:this.price,stock}));
         modalDesc.appendChild(addtocart);
         displayOverlay(modal);
 

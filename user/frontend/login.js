@@ -93,7 +93,7 @@ function displayLoginRegisterIcons()
 function userLogout()
 {
   fetchCall("login.php",responseLogout);
-  console.log(data);
+
   function responseLogout(data)
   {
      console.log(data);

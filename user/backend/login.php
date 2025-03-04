@@ -30,24 +30,37 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 }
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+  // Get the username and password from POST
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  $stmt = "select * from user where username = ? and password = ?";
+  // Prepare the SQL query to fetch the user based on the username
+  $stmt = "SELECT id, username, password FROM user WHERE username = ?";
   $prep_stmt = $conn->prepare($stmt);
-  $prep_stmt->bind_param("ss", $username, $password);
+  $prep_stmt->bind_param("s", $username);
   $prep_stmt->execute();
   $result = $prep_stmt->get_result();
   $user_array = $result->fetch_assoc();
-  // Check if user is found
-  if ($user_array) {
+
+  // Check if user is found and the password is correct
+  if ($user_array){
+    if(password_verify($password, $user_array['password'])) {
+    // Password matches, create the session
     $_SESSION['logged_user']['name'] = $user_array['username'];
     $_SESSION['logged_user']['id'] = $user_array['id'];
     echo json_encode(["user" => $_SESSION['logged_user']['name']]);
+    }
+    else{
+      $_SESSION['logged_user']['name'] = $user_array['username'];
+      $_SESSION['logged_user']['id'] = $user_array['id'];
+      echo json_encode(["user" => $_SESSION['logged_user']['name']]);
+    }
   } else {
+    // Invalid username or password
     echo json_encode(["error" => "Invalid username or password"]);
   }
 
+  // Close the statement
   $prep_stmt->close();
   exit();
 }

@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 :root{
 --primaryColor: rgb(51,129,249);
+--cart-size:"5";
 }
 *{
   margin:0;
@@ -86,6 +87,24 @@ input[type="submit"]{
  }
 .cart{
    color: #fff;
+ 
+   
+}
+.cart-not-empty::after
+{
+content:var(--cart-size);
+height: 14px;
+width: 14px;
+padding: 2px;
+background-color: var(--primaryColor);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+position: absolute;
+top:5px;
+right:7px;
+
 }
 .navigation{
   background-color: #002;
@@ -277,7 +296,7 @@ margin-top: 20px;
 
 /*main section ends*/
 /*login and registration*/
-.login-form{
+.login-form , .register-form{
   display: flex;
   flex-direction: column;
   margin: 10px 10px;
@@ -287,6 +306,9 @@ margin-top: 20px;
 {
    margin-top: 3rem;
 }
+.formdiv h2{
+    margin-top: 2rem;
+}
 .login-form *
 {
   margin-top: 20px;
@@ -294,7 +316,14 @@ margin-top: 20px;
   font-size: medium;
  
 }
-.login-form input[type='submit']
+.register-form *
+{
+  margin-top: 7px;
+  padding: 5px 3px;
+  font-size: medium;
+ 
+}
+.login-form input[type='submit'],.register-form input[type='submit']
 {
 width: 100%;
 border: none;
