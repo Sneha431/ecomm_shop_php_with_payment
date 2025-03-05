@@ -49,6 +49,7 @@ function userLoginRequest(e)
   fetchCall("login.php",userLoginResponse,"POST",formData);
   function userLoginResponse(data){
    data.user && displayLoggedUser(data.user);
+   data.user && updateCart();
   }
 
 

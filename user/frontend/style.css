@@ -331,6 +331,66 @@ border: 2px solid var(--primaryColor);
 box-shadow: 1px 1px 1px lightslategrey;
 color:#002
 }
+
+/*cart section starts*/
+.cart-container
+{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  width:80vw;
+  margin:8rem auto;
+}
+.cart-container > div
+{ 
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 2rem;
+  border-bottom: solid 1px gray;
+}
+.cart-container > div > img{
+  width:35%;
+}
+.cart-container > div > select{
+  width: 100%;
+  height: 30%;
+  margin: auto;
+}
+.delete-product-btn
+{
+  padding: .5rem 1rem;
+  background-color: red;
+  margin-left: 2rem;
+  border-radius: 5px;
+  border-color: red;
+  letter-spacing: .1rem;
+  font-size: medium;
+}
+.cart-container > .total-div
+{
+  grid-column: span 4;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+.cart-container > .nav-div
+{
+  margin-top:3rem;
+  grid-column: span 4;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40rem;
+}
+.nav-div button{
+  background-color: var(--primaryColor);
+  border-color: var(--primaryColor);
+  border-radius: 5px;
+  padding:.5rem 0;
+  letter-spacing: 0.1rem;
+  font-size: large;
+}
+/*cart section ends*/
 /*footer section starts*/
 footer li{
   transform: all 2s ease-in-out;

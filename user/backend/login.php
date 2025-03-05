@@ -43,14 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $user_array = $result->fetch_assoc();
 
   // Check if user is found and the password is correct
-  if ($user_array){
-    if(password_verify($password, $user_array['password'])) {
-    // Password matches, create the session
-    $_SESSION['logged_user']['name'] = $user_array['username'];
-    $_SESSION['logged_user']['id'] = $user_array['id'];
-    echo json_encode(["user" => $_SESSION['logged_user']['name']]);
-    }
-    else{
+  if ($user_array) {
+    if (password_verify($password, $user_array['password'])) {
+      // Password matches, create the session
+      $_SESSION['logged_user']['name'] = $user_array['username'];
+      $_SESSION['logged_user']['id'] = $user_array['id'];
+      echo json_encode(["user" => $_SESSION['logged_user']['name']]);
+    } else {
       $_SESSION['logged_user']['name'] = $user_array['username'];
       $_SESSION['logged_user']['id'] = $user_array['id'];
       echo json_encode(["user" => $_SESSION['logged_user']['name']]);

@@ -17,8 +17,8 @@ function addtoguestUserCart()
   $quantity = $_POST["quantity"];
   if (!isset($_SESSION['cart'][$id])) {
     $_SESSION['cart'][$id]['image'] = $image;
-    $_SESSION['cart'][$id]['stock'] = $stock;
-    $_SESSION['cart'][$id]['quantity'] = $quantity;
+    $_SESSION['cart'][$id]['stock'] = +$stock;
+    $_SESSION['cart'][$id]['quantity'] = +$quantity;
     //   $_SESSION['cart'][$id]['price'] = $price;
   } else {
     $_SESSION['cart'][$id]['quantity'] += $quantity;
@@ -28,7 +28,25 @@ function addtoguestUserCart()
   updateTotalCart();
   echo json_encode(['cart' => $_SESSION['cart']]);
 }
-
+function updateGuestUserCart($_PATCH)
+{
+  $id = $_PATCH['id'];
+  $quantity = $_PATCH['quantity'];
+  $_SESSION['cart'][$id]['quantity'] = $quantity;
+  $price = $quantity * getProdPrice($id);
+  $price = bcdiv($price, 1, 2);
+  $_SESSION['cart'][$id]['price'] = $price;
+  updateTotalCart();
+  echo json_encode(['cart' => $_SESSION['cart']]);
+}
+function deleteGuestUserCartProduct($_DELETE)
+{
+  $id = $_DELETE['id'];
+  unset($_SESSION['cart'][$id]);
+  updateTotalCart();
+  echo json_encode(['cart' => $_SESSION['cart']]);
+}
+/*helper func for calculating price * quantity */
 function getProdPrice($id)
 {
   global $conn;
@@ -45,9 +63,10 @@ function updateTotalCart()
 {
   $total = 0.00;
   foreach ($_SESSION['cart'] as $item) {
-
-    $total += $item['price'];
+    if (isset($item['price'])) {
+      $total += $item['price'];
+    }
   }
   $total = round($total, 2);
-  $_SESSION['cart']['total'] = $total;
+  $_SESSION['cart']['total'] = $total;  // Store the total inside the cart
 }
