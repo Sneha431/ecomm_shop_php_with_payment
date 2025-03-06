@@ -34,9 +34,9 @@ function updateLoggedUserCart($_PATCH)
   $prod_id = $_PATCH['id'];
   $quantity = $_PATCH['quantity'];
   $cart_id = getCartId(getUserId());
-  $stmt = "update cart_item set quantity = ? where cart_id=$cart_id and prod_id=$prod_id";
+  $stmt = "update cart_item set quantity = ? where cart_id=$cart_id and prod_id=?";
   $prep_stmt = $conn->prepare($stmt);
-  $prep_stmt->bind_param("ii", $cart_id, $prod_id, $quantity, $quantity);
+  $prep_stmt->bind_param("ii", $quantity, $prod_id);
   $prep_stmt->execute();
   $prep_stmt->close();
   $cart = getAllCartItems($cart_id);
@@ -84,6 +84,7 @@ function getCartId($user_id)
 function getAllCartItems($cart_id)
 {
   global $conn;
+  $prod_array = [];
   $stmt = "select p.id,p.image,truncate((p.price * ci.quantity),2) as price,ci.quantity,
 i.stock from product p inner join cart_item ci on p.id = ci.prod_id AND ci.cart_id = $cart_id 
 inner join inventory i on p.id = i.product_id";

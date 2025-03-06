@@ -50,11 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       // Password matches, create the session
       $_SESSION['logged_user']['name'] = $user_array['username'];
       $_SESSION['logged_user']['id'] = $user_array['id'];
-
+      unset($_SESSION["cart"]);
       echo json_encode(["user" => $_SESSION['logged_user']['name']]);
     } else {
       $_SESSION['logged_user']['name'] = $user_array['username'];
       $_SESSION['logged_user']['id'] = $user_array['id'];
+      unset($_SESSION["cart"]);
 
       echo json_encode(["user" => $_SESSION['logged_user']['name']]);
     }
