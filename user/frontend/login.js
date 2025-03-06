@@ -99,5 +99,6 @@ function userLogout()
   {
      console.log(data);
     data.logout && displayLoginRegisterIcons();
+    data.logout && updateCart();
   }
 }

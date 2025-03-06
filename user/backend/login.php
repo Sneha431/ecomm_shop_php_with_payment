@@ -12,6 +12,7 @@ require './include/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['q'])) {
   if (isset($_SESSION['logged_user'])) {
+
     echo json_encode(['user' => $_SESSION['logged_user']['name']]);
   } else {
     echo json_encode(['user' => 'guest']);
@@ -22,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
   if (isset($_SESSION['logged_user'])) {
     session_unset();
     session_destroy();
+    unset($_SESSION['cart']);
     echo json_encode(['logout' => true]);
   } else {
     echo json_encode(['logout' => false]);
@@ -48,10 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       // Password matches, create the session
       $_SESSION['logged_user']['name'] = $user_array['username'];
       $_SESSION['logged_user']['id'] = $user_array['id'];
+
       echo json_encode(["user" => $_SESSION['logged_user']['name']]);
     } else {
       $_SESSION['logged_user']['name'] = $user_array['username'];
       $_SESSION['logged_user']['id'] = $user_array['id'];
+
       echo json_encode(["user" => $_SESSION['logged_user']['name']]);
     }
   } else {

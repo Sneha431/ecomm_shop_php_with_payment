@@ -15,26 +15,47 @@ function getLoggedUserCart()
 }
 function addtologgedUserCart()
 {
-  $id = $_POST["id"];
-  $image = $_POST["image"];
-  $price = $_POST["price"];
-  $stock = $_POST["stock"];
-  $quantity = $_POST["quantity"];
-  if (!isset($_SESSION['cart'][$id])) {
-    $_SESSION['cart'][$id]['image'] = $image;
-    $_SESSION['cart'][$id]['stock'] = +$stock;
-    $_SESSION['cart'][$id]['quantity'] = +$quantity;
-    //   $_SESSION['cart'][$id]['price'] = $price;
-  } else {
-    $_SESSION['cart'][$id]['quantity'] += $quantity;
-  }
-  $price = getProdPrice($id);
-  $_SESSION['cart'][$id]['price'] = round(($price * $_SESSION['cart'][$id]['quantity']), 2);
-  updateTotalCart();
-  echo json_encode(['cart' => $_SESSION['cart']]);
+  global $conn;
+  $prod_id = $_POST['id'];
+  $quantity = $_POST['quantity'];
+  $cart_id = getCartId(getUserId());
+  $stmt = "insert into cart_item(cart_id,prod_id,quantity) values(?,?,?) on duplicate key update
+   quantity = quantity + ? ";
+  $prep_stmt = $conn->prepare($stmt);
+  $prep_stmt->bind_param("iiii", $cart_id, $prod_id, $quantity, $quantity);
+  $prep_stmt->execute();
+  $prep_stmt->close();
+  $cart = getAllCartItems($cart_id);
+  echo json_encode(['cart' => $cart]);
 }
-function updateLoggedUserCart($_PATCH) {}
-function deleteLoggedUserCartProduct($_DELETE) {}
+function updateLoggedUserCart($_PATCH)
+{
+  global $conn;
+  $prod_id = $_PATCH['id'];
+  $quantity = $_PATCH['quantity'];
+  $cart_id = getCartId(getUserId());
+  $stmt = "update cart_item set quantity = ? where cart_id=$cart_id and prod_id=$prod_id";
+  $prep_stmt = $conn->prepare($stmt);
+  $prep_stmt->bind_param("ii", $cart_id, $prod_id, $quantity, $quantity);
+  $prep_stmt->execute();
+  $prep_stmt->close();
+  $cart = getAllCartItems($cart_id);
+  echo json_encode(['cart' => $cart]);
+}
+function deleteLoggedUserCartProduct($_DELETE)
+{
+  global $conn;
+  $prod_id = $_DELETE['id'];
+
+  $cart_id = getCartId(getUserId());
+  $stmt = "delete from cart_item where cart_id=$cart_id and prod_id=?";
+  $prep_stmt = $conn->prepare($stmt);
+  $prep_stmt->bind_param("i", $prod_id);
+  $prep_stmt->execute();
+  $prep_stmt->close();
+  $cart = getAllCartItems($cart_id);
+  echo json_encode(['cart' => $cart]);
+}
 //helper func
 function getUserId()
 {
