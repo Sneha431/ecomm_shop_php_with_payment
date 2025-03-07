@@ -296,7 +296,7 @@ margin-top: 20px;
 
 /*main section ends*/
 /*login and registration*/
-.login-form , .register-form{
+.login-form , .register-form,.address-form{
   display: flex;
   flex-direction: column;
   margin: 10px 10px;
@@ -316,14 +316,14 @@ margin-top: 20px;
   font-size: medium;
  
 }
-.register-form *
+.register-form *,.address-form *
 {
   margin-top: 7px;
   padding: 5px 3px;
   font-size: medium;
  
 }
-.login-form input[type='submit'],.register-form input[type='submit']
+.login-form input[type='submit'],.register-form input[type='submit'],.address-form input[type='submit']
 {
 width: 100%;
 border: none;

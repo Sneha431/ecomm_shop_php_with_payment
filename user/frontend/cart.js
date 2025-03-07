@@ -141,6 +141,8 @@ function showCart() {
     const checkoutshopbtn = document.createElement('button');
     checkoutshopbtn.className = "checkout-btn";
     checkoutshopbtn.textContent = "Checkout";
+    checkoutshopbtn.addEventListener("click",checkout);
+
     navDiv.appendChild(checkoutshopbtn);
     container.appendChild(navDiv);
     main.appendChild(container);
