@@ -429,3 +429,75 @@ margin-top: 8px;
   margin-bottom: 15px;
 }
 /*footer section ends*/
+
+
+
+/*success and error page */
+
+   body.error,body.success {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+     .success > .container, .error > .container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+           
+        }
+
+       .error > .container >  h1 {
+            color: #f44336;
+        }
+   .success > .container >  h1  {
+            color: #4caf50;
+        }
+
+        .message {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .details {
+            text-align: left;
+            display: inline-block;
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            
+        }
+
+        .details p {
+            margin: 8px 0;
+        }
+.details span{
+  margin: 5px;
+}
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: #d32f2f;
+        }

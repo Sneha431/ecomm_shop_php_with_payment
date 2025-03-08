@@ -55,7 +55,7 @@ function initiateCheckout($price)
     ]],
     'mode' => 'payment',
     'success_url' => $YOUR_DOMAIN . 'success.php?session_id={CHECKOUT_SESSION_ID}',
-    'cancel_url' => $YOUR_DOMAIN . 'cancel.html',
+    'cancel_url' => $YOUR_DOMAIN . 'cancel.php?session_id={CHECKOUT_SESSION_ID}',
   ]);
 
   return [
@@ -79,9 +79,6 @@ function addToOrderTable()
   values($user_id,'$name','$address','$city','$postcode',$total_price,'$payment_id','pending')";
   $conn->query($stmt);
   $order_id = $conn->insert_id;
-
-
-
   foreach ($cart as $id => $product) {
     $quantity = $product['quantity'];
     $prod_price = $product['price'];

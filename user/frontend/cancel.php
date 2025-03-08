@@ -1,9 +1,4 @@
-<?php
-
-// Include the database connection
-require '../backend/include/db.php'; // Adjust the path
-
-require_once '../../vendor/autoload.php';
+<?php require_once '../../vendor/autoload.php';
 
 // Set your Stripe secret key
 \Stripe\Stripe::setApiKey('sk_test_51OSKsaSEr3MdfqulXhf8BkX8n64qlvIMF2Z3w0UKejsUzcbCUinagskCXV8WcDvPKnquiVd0suKmKk2rDUWhfKSz00FENsCsZu');
@@ -17,8 +12,8 @@ $session_id = $_GET['session_id'] ?? null;
 // Initialize payment variables
 $transaction_id = null;
 $total_amount = 0;
-$payment_method = "Credit Card";  // Default method, can be modified based on session data
-$billing_address = "N/A";  // Default address, modify based on session or database data
+$payment_method = "Credit Card"; // Default method, can be modified based on session data
+$billing_address = "N/A"; // Default address, modify based on session or database data
 
 if ($session_id) {
     try {
@@ -42,37 +37,6 @@ if ($session_id) {
         $billing_name = $checkout_session->customer_details["name"];
         $billing_email = $checkout_session->customer_details["email"];
         $payment_method_type = $checkout_session->payment_method_types[0];
-        // Insert into the database (make sure $conn is initialized correctly)
-        if ($conn) {
-            // Step 1: Get the latest inserted user_id (assuming user_id is auto-incremented)
-            $stmt = "SELECT user_id FROM eshop.order ORDER BY user_id DESC LIMIT 1";
-            $result = $conn->query($stmt);
-
-            if ($result && $result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $latest_user_id = $row['user_id'];
-
-                // Step 2: Update the payment_id for the latest user_id
-
-
-                if ($transaction_id) {
-                    $update_stmt = "UPDATE eshop.order SET payment_id = ? WHERE user_id = ?";
-                    $prep_stmt = $conn->prepare($update_stmt);
-                    if ($prep_stmt) {
-                        // Bind parameters: 's' for string (payment_intent), 'i' for integer (user_id)
-                        $prep_stmt->bind_param("si",  $transaction_id, $latest_user_id);
-                        $prep_stmt->execute();
-                        $prep_stmt->close();
-                    } else {
-                        echo "Error preparing statement for update: " . $conn->error;
-                    }
-                }
-            } else {
-                echo "No users found in the orders table.";
-            }
-        } else {
-            echo "Database connection failed.";
-        }
     } catch (Exception $e) {
         // Handle any errors, like invalid session
         echo "Error: " . $e->getMessage();
@@ -90,18 +54,17 @@ if ($session_id) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Successful</title>
+    <title>Payment Canceled</title>
     <link rel="stylesheet" href="style.css">
 
 </head>
 
-<body class="success">
+<body class="error">
 
     <div class="container">
-        <h1>Payment Successful!</h1>
+        <h1>Payment Canceled</h1>
         <div class="message">
-            Thank you for your purchase! Your payment has been successfully processed. You will receive a confirmation email
-            shortly.
+            We're sorry, but your payment has been canceled. You can try again or contact us if you need assistance.
         </div>
 
         <div class="details">
@@ -132,11 +95,17 @@ if ($session_id) {
 
 
         </div>
-        <div> <a href="http://localhost/ecomm_shop_php_with_payment/user/frontend/" class="btn">
-                Back to Shopping</a></div>
 
+        <div>
+            <a href="http://localhost/ecomm_shop_php_with_payment/user/frontend/" class="btn">
+                Back to Shopping</a>
 
+        </div>
+        <!-- <a href="index.html" class="btn">Try Again</a>
+    <a href="contact.html" class="btn">Contact Support</a> -->
     </div>
+
+
 
 </body>
 

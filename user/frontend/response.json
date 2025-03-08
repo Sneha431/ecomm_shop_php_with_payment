@@ -1,0 +1,155 @@
+{
+  "id": "pm_1R0DnrSEr3MdfqulH1wK1sV4",
+  "object": "payment_method",
+  "allow_redisplay": "unspecified",
+  "billing_details": {
+    "address": {
+      "city": "test",
+      "country": "IN",
+      "line1": "test",
+      "line2": "test",
+      "postal_code": "123333",
+      "state": "AS"
+    },
+    "email": "test@test.com",
+    "name": "test",
+    "phone": null
+  },
+  "card": {
+    "brand": "visa",
+    "checks": {
+      "address_line1_check": null,
+      "address_postal_code_check": null,
+      "cvc_check": null
+    },
+    "country": "US",
+    "display_brand": "visa",
+    "exp_month": 12,
+    "exp_year": 2025,
+    "funding": "credit",
+    "generated_from": null,
+    "last4": "4242",
+    "networks": {
+      "available": [
+        "visa"
+      ],
+      "preferred": null
+    },
+    "regulated_status": "unregulated",
+    "three_d_secure_usage": {
+      "supported": true
+    },
+    "wallet": null
+  },
+  "created": 1741403516,
+  "customer": null,
+  "livemode": false,
+  "type": "card"
+}
+{
+  "id": "cs_test_a1jie5ATVQvOooXsejuJ7IgJpTzcbkOc2x8y43fgnzq4Uhv4DHYuVnNerS",
+  "object": "checkout.session",
+  "adaptive_pricing": {
+    "enabled": false
+  },
+  "after_expiration": null,
+  "allow_promotion_codes": null,
+  "amount_subtotal": 5065,
+  "amount_total": 5065,
+  "automatic_tax": {
+    "enabled": false,
+    "liability": null,
+    "status": null
+  },
+  "billing_address_collection": null,
+  "cancel_url": "http://localhost:80/ecomm_shop_php_with_payment/user/frontend/cancel.php?session_id={CHECKOUT_SESSION_ID}",
+  "client_reference_id": null,
+  "client_secret": null,
+  "collected_information": null,
+  "consent": null,
+  "consent_collection": null,
+  "created": 1741403466,
+  "currency": "usd",
+  "currency_conversion": null,
+  "custom_fields": [],
+  "custom_text": {
+    "after_submit": null,
+    "shipping_address": null,
+    "submit": null,
+    "terms_of_service_acceptance": null
+  },
+  "customer": null,
+  "customer_creation": "if_required",
+  "customer_details": {
+    "address": {
+      "city": "test",
+      "country": "IN",
+      "line1": "test",
+      "line2": "test",
+      "postal_code": "123333",
+      "state": "AS"
+    },
+    "email": "test@test.com",
+    "name": "test",
+    "phone": null,
+    "tax_exempt": "none",
+    "tax_ids": []
+  },
+  "customer_email": null,
+  "discounts": [],
+  "expires_at": 1741489866,
+  "invoice": null,
+  "invoice_creation": {
+    "enabled": false,
+    "invoice_data": {
+      "account_tax_ids": null,
+      "custom_fields": null,
+      "description": null,
+      "footer": null,
+      "issuer": null,
+      "metadata": [],
+      "rendering_options": null
+    }
+  },
+  "livemode": false,
+  "locale": null,
+  "metadata": [],
+  "mode": "payment",
+  "payment_intent": "pi_3R0DntSEr3Mdfqul0Mzzb9In",
+  "payment_link": null,
+  "payment_method_collection": "if_required",
+  "payment_method_configuration_details": {
+    "id": "pmc_1QzvrCSEr3MdfqulK5PXDkfG",
+    "parent": null
+  },
+  "payment_method_options": {
+    "card": {
+      "request_three_d_secure": "automatic"
+    }
+  },
+  "payment_method_types": [
+    "card"
+  ],
+  "payment_status": "paid",
+  "phone_number_collection": {
+    "enabled": false
+  },
+  "recovered_from": null,
+  "saved_payment_method_options": null,
+  "setup_intent": null,
+  "shipping_address_collection": null,
+  "shipping_cost": null,
+  "shipping_details": null,
+  "shipping_options": [],
+  "status": "complete",
+  "submit_type": null,
+  "subscription": null,
+  "success_url": "http://localhost:80/ecomm_shop_php_with_payment/user/frontend/success.php?session_id={CHECKOUT_SESSION_ID}",
+  "total_details": {
+    "amount_discount": 0,
+    "amount_shipping": 0,
+    "amount_tax": 0
+  },
+  "ui_mode": "hosted",
+  "url": null
+}
